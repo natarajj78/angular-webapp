@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="panel-title">Code Beacons</h3></div>
+            <div class="panel-body">
+                <div ng-show="cb.beacons.length==0">No Records</div>
+                <div ng-show="loading">Hi, I'm loading</div>
+                <table class="table agenttable  table-hover" ng-show="cb.beacons" width="100%">
+                    <thead>
+                    <th width="10%">Message</th>
+                    <th width="17%">Description</th>
+                    <th width="20%">Date/Time</th>
+                    <th width="20%">Page</th>
+                    <th width="14%">Url</th>
+                    <th width="8%">Edit</th>
+                    <th width="11%">Remove</th>
+                    </thead>
+                    <tbody>
+                        <tr  ng-repeat="currentBeacon in cb.beacons">
+                            <td width="15%">{{currentBeacon.message}} </td>
+                            <td width="20%">{{currentBeacon.notes}} </td>
+                            <td width="20%">{{currentBeacon.date | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td width="14%">{{currentBeacon.page}}</td>
+                            <td width="8%">{{currentBeacon.url}}</td>
+                            <td width="8%"><i class="glyphicon btn-link glyphicon-edit" ng-click="cb.setBeacon(currentBeacon)" class="btn btn-link" ng-class="{disabled: agent}"></i></td>
+                            <td width="11%">
+                                <span ng-click="currentBeacon.confirm=true" ng-hide="currentBeacon.confirm"><i class="glyphicon btn-link glyphicon-trash"></i></span>
+                                <button ng-click="cb.remove(currentBeacon)" ng-show="currentBeacon.confirm && !currentBeacon.removing" class="btn btn-danger">Confirm</button>
+                                <button class="btn btn-warning" ng-show="currentBeacon.removing">Removing</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ cb.beacon._id ? "Update" : "Add" }}</h3>
+            </div>
+            <div class="panel-body">
+
+                <form role="form" name="beaconForm" action="{{action}}" novalidate>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <input type="text" class="form-control"
+                               placeholder="Any Message"
+                               ng-model="cb.beacon.message" name="message" ng-minlength="4" ng-required />
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea class="form-control" ng-model="cb.beacon.notes" name="notes" rows="4" cols="50"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Date / Time</label>
+                        <input type="text" class="form-control" ng-model="cb.beacon.date" name="date" />
+                    </div>
+                    <div class="form-group">
+                        <label>Page</label>
+                        <input type="text" class="form-control" ng-model="cb.beacon.page" name="page" /> 
+                    </div>
+                    <div class="form-group">
+                        <label>Url</label>
+                        <input type="text" class="form-control" ng-model="cb.beacon.url" name="url" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" ng-click="cb.createOrUpdate(cb.beacon)" ng-disabled="beaconForm.$invalid">
+                            {{ cb.beacon._id ? "Update" : "Add" }}
+                        </button>
+                        <button type="button" class="btn btn-link" ng-click="cb.setBeacon()">Cancel</button>
+                    </div>
+                    <tt></tt>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

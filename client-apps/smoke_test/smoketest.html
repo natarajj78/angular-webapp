@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div ng-controller="smokeTestCtrl as st" class="row">
+        <div class="col-sm-3 col-md2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li ng-repeat="elist in st.envlist"><a> {{elist.name}}<ul><li ng-repeat="eelist in elist.list"><a href="#/smoketest/{{eelist.alias}}">{{eelist.host}}</a>
+                </li>
+            </ul>
+            </a>
+            </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md9 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Bundle Check for : {{st.sandbox}}</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Fragment</th>
+                                <th>State</th>
+                                <th>Version</th>
+                                <th>symbolicName</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="d in st.bundles.data |  filter:'com.cisco' ">
+                                    <td>[{{$index + 1}}]</td>
+                                    <td>{{d.name}}</td>
+                                    <td>{{d.fragment}}</td>
+                                    <td>{{d.state | ActiveCheck}}</td>
+                                    <td>{{d.version | VersionCheck}}</td>
+                                    <td>{{d.symbolicName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

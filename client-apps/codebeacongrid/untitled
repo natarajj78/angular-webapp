@@ -1,0 +1,10 @@
+<table>
+	<tr>
+		<td> {{mySelections[0].message}}</td>
+		<td> {{mySelections[0].notes}}</td>
+		<td> {{mySelections[0].date}}</td>
+		<td> {{mySelections[0].page}}</td>
+		<td> {{mySelections[0].url}}</td>
+	</tr>
+</table>	
+		                       

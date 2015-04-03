@@ -1,0 +1,61 @@
+<div ng-controller="clListCtrl as cl" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-5 col-md5 sidebar">
+            <!--<div class="panel panel-default">
+                <div class="panel-heading">Component Listing</div>
+                <div class="panel-body">-->
+                    <div class="table-responsive">
+                        <form role="form" ng:submit="change()" class="horizontal">
+                            <div class="form-group  has-feedback">
+                                <label for="inputSuccess3" class="control-label">Service Location:</label>
+                                <input type="text" ng-model="cl.serverLocation" class="form-control" /> 
+                            </div>
+                        </form>
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>Type</th>
+                                <th>Component Name</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="(cmptype,cmpname) in cl.data.clservice.list ">
+                                    <td>{{cmptype}}</td>
+                                    <td><span ng-repeat="(cmpvariationKey,cmpvariationValue) in cmpname">{{cmpvariationKey}} --<span ng-repeat="(key,value) in cmpvariationValue"><!--span(ng-controller='clCmpID')--><a ng-click="cl.showDesc(value)">{{value}}</a>,</span>
+                                        <br/>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            <!--    </div>
+            </div>-->
+        </div>
+        <div class="col-sm-7 col-md7" style="float:right;">
+            <!--div(ng-include='ng-include', src='"partials/componentlisting_child"')-->
+            <div ng-show="cl.data1" class="panel panel-default">
+                <div class="panel-heading">Variations for: {{id}}</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>Title</th>
+                                <th>Purpose</th>
+                                <th>OutCome</th>
+                                <th>UseCase</th>
+                            </thead>
+                            <tbody ng-repeat="(key,value) in cl.data1.clservice.list">
+                                <tr ng-repeat="(key1,value1) in value.useCases">
+                                    <td>{{value1.Title}}</td>
+                                    <td>{{value1.Purpose}}</td>
+                                    <td>{{value1.Outcome}}</td>
+                                    <td><a href="{{serverLocation}}caseRunner.php?variation={{id}}&amp;uc={{key1}}&amp;target=main&amp;nav=null" target="_blank">{{key1}}</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

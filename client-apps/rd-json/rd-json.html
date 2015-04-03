@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">Add / Edit Language</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                    <table id="example" class="display table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Language</th>
+                            <th>Value</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="lang in rd.languages">
+                            <td></td>
+                            <td>{{lang.name}}</td>
+                            <td>{{lang.value}}</td>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+                            </td>
+                            <td>
+                              <button type="button" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                              </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div>
+        </div>
+        <!-- COL9 -->
+        <div class="col-sm-3  col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Add / Edit Language</div>
+                <div class="panel-body">
+                    <form role="form" name="form" ng-submit="submit();">
+                        <div class="form-group  control-group" ng-class="error('language')"> 
+                            <label for="language">Language</label>
+                            <input type="text" class="form-control" name="language"  ng-model="langauge" id="language" placeholder="Enter Langauge name" required>
+                            <!-- pattern, minlength,maxlength, min and max.-->
+                            <span class="help-block" ng-show="form.language.$invalid && form.language.$dirty">Language is required</span>
+                        </div>
+                        <div class="form-group control-group">
+                            <label for="value">Password</label>
+                            <input type="text" class="form-control" name="value"  ng-model="value" id="value" placeholder="Enter Value" pattern=".{3,}" required title="3 characters minimum">
+                            <span class="help-block" ng-show="form.value.$invalid && form.value.$dirty">Value is required</span>
+
+                        </div>
+                        <div class="form-group control-group">
+                            <button type="submit"  ng-disabled="form.$invalid" class="btn btn-default">Submit</button>
+                        </div>
+                    </form>
+                    <!--Form valid :{{form.language.$valid}} </br>
+                    Form validation error: {{form.$error}} -->  
+                </div>
+            </div>
+        </div>
+        <!-- COL3 -->
+    </div>
+</div>

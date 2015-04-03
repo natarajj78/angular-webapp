@@ -1,0 +1,133 @@
+<div class="row">
+  <div class="col-xs-3">
+    <div ng-repeat="team in teams" class="row">
+      <h3><i class="fa fa-fw fa-users"></i> {{ team.name }}<span tooltip="{{ team.name }} velocity" class="label label-default pull-right">{{ team.sprints | beforeNowByKey: 'endDate' | velocity }} EP</span></h3>
+      <h4><a data-ng-href="{{team.backlogUrl}}" target="_blank">Backlog</a><span tooltip="Ready for Sprinting" class="label label-default pull-right">{{ team.backlogCards | filter: {'Health': 'Ready for Sprinting'} | sumByKey: 'Effort Points' }} EP</span></h4>
+      <div class="list-group"><a href="#" ng-click="setSprint(team, sprint)" ng-repeat="sprint in team.sprints" ng-class="{'list-group-item-info': sprint === selectedSprint}" class="list-group-item">
+          <h4 class="list-group-item-heading">{{ sprint.name }}<small ng-show="sprint.goal" class="pull-right">{{ sprint.goal }}</small></h4>
+          <p ng-show="(team.sprints | afterNowByKey: 'endDate')[0] === sprint" class="list-group-item-text">
+            <progress>
+              <bar ng-repeat="bar in sprint.charts.progress" value="bar.value" type="{{ bar.type }}"><span ng-hide="bar.value &lt; 14">{{ bar.value }}%</span></bar>
+            </progress>
+          </p>
+          <p class="list-group-item-text"><span class="label label-default pull-right">{{ sprint.cards | filter: {'Type': 'Story'} | sumByKey: 'Effort Points' }} EP</span>
+            <div class="clearfix"></div>
+          </p></a></div>
+    </div>
+  </div>
+  <div ng-show="selectedTeam" class="col-xs-9">
+    <h4>{{ selectedTeam.name }}</h4>
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-fw fa-newspaper-o"></i> Sprint Status<a data-ng-href="{{ selectedSprint.wallUrl }}" target="_blank" class="pull-right"><i class="fa fa-fw fa-external-link"></i></a></h4>
+          </div>
+          <div class="panel-body">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Developer</th>
+                  <th>Card</th>
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="card in selectedSprint.cards | filter:{'Simple Status': 'Blocked'} | orderByKey: 'Developer - ID'" class="bg-danger">
+                  <td>{{ card['Developer - ID'] }}</td>
+                  <td> <a data-ng-href="http://cardbot.cisco.com:8080/projects/leopard_spots/cards/{{card.Number}}" target="_blank">{{ card.Number }}</a></td>
+                  <td>{{ card.Name }}</td>
+                </tr>
+                <tr ng-repeat="card in selectedSprint.cards | filter:{'Simple Status': 'In Progress'} | orderByKey: 'Developer - ID'" class="bg-warning">
+                  <td>{{ card['Developer - ID'] }}</td>
+                  <td> <a data-ng-href="http://cardbot.cisco.com:8080/projects/leopard_spots/cards/{{card.Number}}" target="_blank">{{ card.Number }}</a></td>
+                  <td>{{ card.Name }}</td>
+                </tr>
+                <tr ng-repeat="card in selectedSprint.cards | filter:{'Simple Status': 'Dev Done'} | orderByKey: 'Developer - ID'" class="bg-success">
+                  <td>{{ card['Developer - ID'] }}</td>
+                  <td> <a data-ng-href="http://cardbot.cisco.com:8080/projects/leopard_spots/cards/{{card.Number}}" target="_blank">{{ card.Number }}</a></td>
+                  <td>{{ card.Name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="panel panel-info">
+          <div class="panel-body"><span class="label label-primary">Burndown</span>
+            <div ng-controller="BurndownController" class="row">
+              <nvd3-line-chart id="js-burndown-chart" data="selectedSprint.charts.burndown" showlegend="true" interactive="true" tooltips="true" showXAxis="true" showYAxis="true">
+                <svg></svg>
+              </nvd3-line-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title"><i class="fa fa-fw fa-tasks"></i> Cards<span class="badge pull-right">{{ selectedSprint.cards.length }}</span></h4>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <form role="form" name="filterForm" class="form-horizontal">
+            <div class="col-xs-3">
+              <h4ou><i class="fa fa-fw fa-search"></i> Query</h4ou>
+              <div class="form-group">
+                <label for="Type" class="col-xs-4 control-label">Card Type</label>
+                <div class="col-xs-8">
+                  <!--<select name="Type" ng-model="queryFilter.Type" ng-options="item.Type as item.Type for item in selectedSprint.cards " class="form-control"></select>-->
+                  <!--<select name="Type" ng-model="queryFilter.Type" ng-options="item.Type as item.Type for item in selectedSprint.cards | unique : 'Type'" class="form-control"></select>-->
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="Status" class="col-xs-4 control-label">Status</label>
+                <div class="col-xs-8">
+                  <!--<select name="Type" ng-model="queryFilter['Simple Status']" ng-options="item['Simple Status'] as item['Simple Status'] for item in selectedSprint.cards " class="form-control"></select>-->
+                  <!--<select name="Type" ng-model="queryFilter['Simple Status']" ng-options="item['Simple Status'] as item['Simple Status'] for item in selectedSprint.cards | unique : 'Simple Status'" class="form-control"></select>-->
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-9">
+              <table class="table table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th style="width: 30%;">Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Powner</th>
+                    <th>Developer</th>
+                    <th>Estimate</th>
+                    <th>Remaining</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="card in selectedSprint.cards | filter : queryFilter">
+                    <td>{{ card['Number'] }}</td>
+                    <td>{{ card['Name'] }}</td>
+                    <td>{{ card['Type'] }}</td>
+                    <td>{{ card['Simple Status'] }}</td>
+                    <td>{{ card['Powner'] }}</td>
+                    <td>{{ card['Developer - ID'] }}</td>
+                    <td>{{ card['Hours Estimate'] }}</td>
+                    <td>{{ card['Hours Remaining'] }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <p>Teams:</p>
+  <ul class="list-group">
+    <li ng-repeat="item in teams" class="list-group-item">
+      <pre>{{item}}</pre>
+    </li>
+  </ul>
+</div>

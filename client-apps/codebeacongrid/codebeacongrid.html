@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-md-12" ng-controller="codebeacongridCtrl  as cbg">
+
+        <!-- TOP Grid..-->
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>Filter / Search Code Beacons</b   ></div>
+            <div class="panel-body">
+            
+                <form class="form-inline" role="form">
+                    <div class="form-group input-group-xs">
+                        <label class="sr-only" for="name">Name</label>
+                        <input type="text" class="form-control " id="message"  ng-model="filterOptions.name" name="message" placeholder="Message">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="mrn">MRN</label>
+                        <input type="text" class="form-control" id="signature"  ng-model="filterOptions.signature" name="signature"  placeholder="Signature">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="clinic">Clinic</label>
+                        <input type="text" class="form-control" id="page"  ng-model="filterOptions.page" name="page" placeholder="Page">
+                        <input type="hidden" name="a" id="a" ng-model="filterOptions.dateStart">  
+                        <input type="hidden" name="b" id="b" ng-model="filterOptions.dateEnd">    
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="clinic">AnyTime</label>
+                        <span class="time"></span><span >{{time}}</span>
+                    </div>
+                    <!-- Dropdown-->
+                    <div class="form-group dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Any time';   ">Any time</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Past hour';">Past hour</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Past 24 hours';">Past 24 hours</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Past week'; ">Past week</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Past 2 week';">Past 2 week</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Past 4 week';">Past 4 week</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Past 180 days';">Past 180 days</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Past year'; ">Past year</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="time='Past 2 years';">Past 2 years</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem"   data-toggle="modal" data-target="#dialog" tabindex="-1" href="">Custom range</a></li>
+                        </ul>
+                    </div><!-- Drop Down -->
+                    <!-- Added on 31/07/2014 -->
+                    <div class="form-group">
+                        <label class="sr-only" for="clinic">Select</label>
+                        <span class="time"></span><span >Select</span>
+                    </div>
+      
+                    <div class="form-group">
+                           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" ng-click="search()">Search</button>
+                    </div>
+
+                    <div class="form-group">
+                           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" ng-click="clearTxt()">Clear</button>
+                    </div>  
+                </form>  
+            
+            </div>
+        </div> <!-- END: Top Grid.. -->
+        
+        <!-- Grid .. -->
+        <div class="panel panel-default">
+        <div class="panel-heading"><b>Code Beacons Listing..</b> <div style="float:right;"><button type="button" class="btn btn-default btn-xs"  ng-click="addEditBeacon();"><span class="glyphicon glyphicon-plus"></span></button></div></div>
+        <div class="panel-body">
+            <div> 
+                <div class="gridStyle" ng-grid="grid.options">
+                     <div class="selectedItems">
+                        <table>
+                            <tr>
+                                <td>Message: {{mySelections[0].message}}/ </td>
+                                <td>Signature: {{mySelections[0].notes}}/ </td>
+                                <td>Date: {{mySelections[0].date}}/ </td>
+                                <td>Page: {{mySelections[0].page}}/ </td>
+                                <td>Url: {{mySelections[0].url}} </td>
+                            </tr>
+                        </table>    
+                     </div>
+                </div>
+            </div>
+        </div>
+        </div> <!-- End : Grid --->
+    </div>
+</div> <!--  END: row at lineno:1-->
+
+
+
+<div class="modal fade bs-example-modal-lg" id="dialoggrid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Lising Info:</h4>
+        </div>
+        <div class="modal-body">
+            <!-- Listing -->
+<div class="selectedItems12" >
+    You have selected:<br/><br/>
+    <div ng-repeat="detail in details">
+        TreatmentId: {{ detail.treatmentId }}<br/>
+        MRN: {{ detail.mrn }}
+    </div>
+</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+</div>
+</div> 

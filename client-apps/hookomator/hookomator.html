@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-8">
+    <accordion>
+      <accordion-group is-open="isopen">
+        <accordion-heading>Unlock Branch<i ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}" class="pull-right glyphicon"></i></accordion-heading>
+        <form>
+          <div class="form-group">
+            <select ng-model="branch" ng-options="branch.name for branch in allBranches" class="form-control"></select>
+          </div>
+          <div ng-show="branch" class="form-group">
+            <button ng-click="unlockBranch(branch)" class="btn btn-default">Unlock</button>
+          </div>
+        </form>
+      </accordion-group>
+    </accordion>
+    <accordion>
+      <accordion-group is-open="isopen">
+        <accordion-heading>Lock Branch<i ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}" class="pull-right glyphicon"></i></accordion-heading>
+        <form>
+          <div class="form-group">
+            <select ng-model="branch" ng-options="branch.name for branch in unlockedBranches" class="form-control"></select>
+          </div>
+          <div ng-show="branch" class="form-group">
+            <button ng-click="lockBranch(branch)" class="btn btn-default">Lock</button>
+          </div>
+        </form>
+      </accordion-group>
+    </accordion>
+  </div>
+  <div class="col-md-4">
+    <div class="panel">
+      <div class="panel-heading"></div>
+    </div>
+  </div>
+</div>

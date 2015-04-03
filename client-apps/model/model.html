@@ -1,0 +1,362 @@
+<tabset>
+  <tab select="loadModels('Release')">
+    <tab-heading><i class="fa fa-fw fa-rocket"></i> Releases</tab-heading>
+    <div class="row">
+      <h4></h4>
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>engineer</th>
+            <th>date</th>
+            <th>duration</th>
+            <th>task</th>
+            <th>branch</th>
+            <th>tag</th>
+            <th>environment</th>
+            <th>version</th>
+            <th>name</th>
+            <th>notes</th>
+            <th>#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in releases">
+            <td><i ng-click="copyModel(item)" class="fa fa-fw fa-copy"></i></td>
+            <td><span editable-text="item.engineer" buttons="no" onaftersave="item.$save()">{{ item.engineer || "none" }}</span></td>
+            <td><span editable-text="item.date" buttons="no" onaftersave="item.$save()">{{ item.date || "none" }}</span></td>
+            <td><span editable-text="item.duration" buttons="no" onaftersave="item.$save()">{{ item.duration || "none" }}</span></td>
+            <td><span editable-text="item.task" buttons="no" onaftersave="item.$save()">{{ item.task || "none" }}</span></td>
+            <td><span editable-text="item.branch" buttons="no" onaftersave="item.$save()">{{ item.branch || "none" }}</span></td>
+            <td><span editable-text="item.tag" buttons="no" onaftersave="item.$save()">{{ item.tag || "none" }}</span></td>
+            <td><span editable-text="item.environment" buttons="no" onaftersave="item.$save()">{{ item.environment || "none" }}</span></td>
+            <td><span editable-text="item.version" buttons="no" onaftersave="item.$save()">{{ item.version || "none" }}</span></td>
+            <td><span editable-text="item.name" buttons="no" onaftersave="item.$save()">{{ item.name || "none" }}</span></td>
+            <td><span editable-text="item.notes" buttons="no" onaftersave="item.$save()">{{ item.notes || "none" }}</span></td>
+            <td><a href="#" ng-click="item.$wait=true" ng-hide="item.$wait"><i class="fa fa-trash-o"> Delete</i></a><a href="#" ng-click="item.$wait=undefined" ng-show="item.$wait"><i class="fa fa-undo"></i> Cancel</a> <a href="#" ng-click="item.$confirm=true; removeModel('Release', item)" ng-show="item.$wait"><i class="fa fa-question"></i> Confirm</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <form role="form" name="releaseForm" novalidate ng-submit="addModel('Release', newRelease); newRelease = undefined;">
+        <table class="table">
+          <thead ng-show="newRelease">
+            <tr>
+              <th>#</th>
+              <th>engineer</th>
+              <th>date</th>
+              <th>duration</th>
+              <th>task</th>
+              <th>branch</th>
+              <th>tag</th>
+              <th>environment</th>
+              <th>version</th>
+              <th>name</th>
+              <th>notes</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-show="newRelease">
+              <td><i class="fa fa-fw fa-plus"></i></td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.engineer.$valid, 'has-error': releaseForm.engineer.$dirty &amp;&amp; releaseForm.engineer.$invalid}" class="input-group">
+                  <input type="text" name="engineer" ng-required="true" ng-model="newRelease.engineer" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.date.$valid, 'has-error': releaseForm.date.$dirty &amp;&amp; releaseForm.date.$invalid}" class="input-group">
+                  <input type="text" name="date" ng-required="true" ng-model="newRelease.date" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.duration.$valid, 'has-error': releaseForm.duration.$dirty &amp;&amp; releaseForm.duration.$invalid}" class="input-group">
+                  <input type="text" name="duration" ng-required="true" ng-model="newRelease.duration" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.task.$valid, 'has-error': releaseForm.task.$dirty &amp;&amp; releaseForm.task.$invalid}" class="input-group">
+                  <input type="text" name="task" ng-required="true" ng-model="newRelease.task" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.branch.$valid, 'has-error': releaseForm.branch.$dirty &amp;&amp; releaseForm.branch.$invalid}" class="input-group">
+                  <input type="text" name="branch" ng-required="true" ng-model="newRelease.branch" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.tag.$valid, 'has-error': releaseForm.tag.$dirty &amp;&amp; releaseForm.tag.$invalid}" class="input-group">
+                  <input type="text" name="tag" ng-required="true" ng-model="newRelease.tag" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.environment.$valid, 'has-error': releaseForm.environment.$dirty &amp;&amp; releaseForm.environment.$invalid}" class="input-group">
+                  <input type="text" name="environment" ng-required="true" ng-model="newRelease.environment" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.version.$valid, 'has-error': releaseForm.version.$dirty &amp;&amp; releaseForm.version.$invalid}" class="input-group">
+                  <input type="text" name="version" ng-required="true" ng-model="newRelease.version" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.name.$valid, 'has-error': releaseForm.name.$dirty &amp;&amp; releaseForm.name.$invalid}" class="input-group">
+                  <input type="text" name="name" ng-required="true" ng-model="newRelease.name" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div ng-class="{'has-success': releaseForm.notes.$valid, 'has-error': releaseForm.notes.$dirty &amp;&amp; releaseForm.notes.$invalid}" class="input-group">
+                  <input type="text" name="notes" ng-required="true" ng-model="newRelease.notes" class="form-control input-sm">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="12"><a ng-click="newRelease={}" ng-class="{disabled: newRelease}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-rocket"></i>New Release</a>
+                <div ng-show="newRelease" class="pull-right">
+                  <button type="submit" ng-disabled="releaseForm.$invalid" ng-class="{'btn-success': releaseForm.$valid, 'btn-danger': releaseForm.$invalid &amp;&amp; releaseForm.$dirty}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-send-o"></i> Submit</button> <a ng-click="newRelease=undefined" class="btn btn-sm btn-warning"><i class="fa fa-fw fa-undo"></i> Cancel</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </tab>
+  <tab select="loadModels('User')">
+    <tab-heading><i class="fa fa-fw fa-user"></i> Users</tab-heading>
+    <div class="row">
+      <table class="table table-striped no-margin">
+        <thead>
+          <tr>
+            <th style="width: 5%;">#</th>
+            <th style="width: 25%;"><i class="fa fa-fw fa-user"></i> Name</th>
+            <th style="width: 25%;"><i class="fa fa-fw fa-terminal"></i> Login</th>
+            <th style="width: 30%;"><i class="fa fa-fw fa-envelope-o"></i> Email</th>
+            <th style="width: 15%"><i class="fa fa-fw fa-asterisk"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in users">
+            <td class="vert-align">{{ $index + 1 }}</td>
+            <td class="vert-align"><span editable-text="item.name" buttons="no" onaftersave="item.$save()">{{ item.name || "none" }}</span></td>
+            <td class="vert-align"><span editable-text="item.login" buttons="no" onaftersave="item.$save()">{{ item.login || "none" }}</span></td>
+            <td class="vert-align"><span editable-text="item.email" buttons="no" onaftersave="item.$save()">{{ item.email || "none" }}</span></td>
+            <td class="vert-align"><a href="#" ng-click="item.$wait=true" ng-hide="item.$wait"><i class="fa fa-trash-o"> Delete</i></a><a href="#" ng-click="item.$wait=undefined" ng-show="item.$wait"><i class="fa fa-undo"></i> Cancel</a> <a href="#" ng-click="item.$confirm=true; removeModel('User', item)" ng-show="item.$wait"><i class="fa fa-question"></i> Confirm</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <form role="form" name="userForm" novalidate ng-submit="addModel('User', newUser); newUser = undefined;">
+        <table class="table">
+          <tbody>
+            <tr ng-show="newUser">
+              <td style="width: 5%;"><i class="fa fa-fw fa-plus"></i></td>
+              <td style="width: 25%">
+                <div ng-class="{'has-success': userForm.name.$valid, 'has-error': userForm.name.$dirty &amp;&amp; userForm.name.$invalid}" class="input-group">
+                  <input type="text" name="name" ng-required="true" ng-model="newUser.name" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+                </div>
+              </td>
+              <td style="width: 25%">
+                <div ng-class="{'has-success': userForm.login.$valid, 'has-error': userForm.login.$dirty &amp;&amp; userForm.login.$invalid}" class="input-group">
+                  <input type="text" name="login" ng-required="true" ng-model="newUser.login" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-terminal"></i></span>
+                </div>
+              </td>
+              <td style="width: 30%">
+                <div ng-class="{'has-success': userForm.email.$valid, 'has-error': userForm.email.$dirty &amp;&amp; userForm.email.$invalid}" class="input-group">
+                  <input type="email" name="email" ng-required="true" ng-model="newUser.email" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-envelope-o"></i></span>
+                </div>
+              </td>
+              <td style="width: 35%"></td>
+            </tr>
+            <tr>
+              <td colspan="5"><a ng-click="newUser={}" ng-class="{disabled: newUser}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-plus"></i>New user</a>
+                <div ng-show="newUser" class="pull-right">
+                  <button type="submit" ng-disabled="userForm.$invalid" ng-class="{'btn-success': userForm.$valid, 'btn-danger': userForm.$invalid &amp;&amp; userForm.$dirty}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-send-o"></i> Submit</button> <a ng-click="newUser=undefined" class="btn btn-sm btn-warning"><i class="fa fa-fw fa-undo"></i> Cancel</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </tab>
+  <tab select="loadModels('Team')">
+    <tab-heading><i class="fa fa-fw fa-users"></i> Teams</tab-heading>
+    <div class="table-responsive">
+      <table class="table table-striped no-margin">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><i class="fa fa-fw fa-tag"></i> Team Name</th>
+            <th><i class="fa fa-fw fa-user"></i> Product Owner</th>
+            <th><i class="fa fa-fw fa-user"></i> Scrum Master</th>
+            <th><i class="fa fa-fw fa-road"></i> Backlog</th>
+            <th><i class="fa fa-fw fa-road"></i> Backlog Url</th>
+            <th><i class="fa fa-fw fa-users"></i> Members</th>
+            <th><i class="fa fa-fw fa-road"></i> Sprints</th>
+            <th><i class="fa fa-fw fa-picture-o"></i> Picture</th>
+            <th><i class="fa fa-fw fa-asterisk"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="team in teams" ng-show="teams">
+            <td class="vert-align">{{ $index + 1 }}</td>
+            <td class="vert-align"><span editable-text="team.name" buttons="no" onaftersave="team.$save()">{{ team.name }}</span></td>
+            <td class="vert-align"><span editable-select="team.productOwner._id" onaftersave="team.$save()" e-ng-options="user._id as user.name for user in users">{{ team.productOwner.name || '(none)' }}</span></td>
+            <td class="vert-align"><span editable-select="team.scrumMaster._id" onaftersave="team.$save()" e-ng-options="user._id as user.name for user in users">{{ team.scrumMaster.name || '(none)' }}</span></td>
+            <td class="vert-align"><span editable-text="team.backlog" buttons="no" onaftersave="team.$save()">{{ team.backlog || '(none)' }}</span></td>
+            <td class="vert-align"><span editable-text="team.backlogUrl" buttons="no" onaftersave="team.$save()">{{ team.backlogUrl || '(none)' }}</span></td>
+            <td class="vert-align">
+              <div ng-repeat="member in team.members"><span ng-bind="member.name"></span><span class="pull-right"><a href="#" ng-click="member.$wait=true" ng-hide="member.$wait"><i class="fa fa-trash-o"> </i></a><a href="#" ng-click="member.$wait=undefined" ng-show="member.$wait"><i class="fa fa-undo"></i></a> <a href="#" ng-click="member.$confirm=true; removeMember(team, member)" ng-show="member.$wait"><i class="fa fa-question"></i></a></span></div>
+              <div style="width: 100%" class="btn-group">
+                <button type="button" style="width: 100%;" data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-xs">Add Member <span class="caret"> </span></button>
+                <ul role="menu" class="dropdown-menu">
+                  <li ng-repeat="user in users | memberFilter:team.members"><a href="#" ng-click="team.members.push(user); team.$save()"> {{user.name}}</a></li>
+                </ul>
+              </div>
+            </td>
+            <td class="vert-align">
+              <div ng-repeat="sprint in team.sprints"><span ng-bind="sprint.name"></span><span class="pull-right"><a href="#" ng-click="sprint.$wait=true" ng-hide="sprint.$wait"><i class="fa fa-trash-o"> </i></a><a href="#" ng-click="sprint.$wait=undefined" ng-show="sprint.$wait"><i class="fa fa-undo"></i></a> <a href="#" ng-click="sprint.$confirm=true; removeSprint(team, sprint)" ng-show="sprint.$wait"><i class="fa fa-question"></i></a></span></div>
+              <div style="width: 100%" class="btn-group">
+                <button type="button" style="width: 100%;" data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-xs">Add Sprint <span class="caret"> </span></button>
+                <ul role="menu" class="dropdown-menu">
+                  <li ng-repeat="sprint in sprints"><a href="#" ng-click="team.sprints.push(sprint); team.$save()"> {{sprint.name}}</a></li>
+                </ul>
+              </div>
+            </td>
+            <td class="vert-align"><span editable-text="team.imageUrl" buttons="no" onaftersave="team.$save()">{{ team.imageUrl || '(none)' }}</span></td>
+            <td><a href="#" ng-click="team.$wait=true" ng-hide="team.$wait"><i class="fa fa-trash-o"></i></a><a href="#" ng-click="team.$wait=undefined" ng-show="team.$wait"><i class="fa fa-undo"></i></a> <a href="#" ng-click="team.$confirm=true; removeModel('Team', team)" ng-show="team.$wait"><i class="fa fa-question"></i></a></td>
+          </tr>
+        </tbody>
+      </table>
+      <form role="form" name="teamForm" novalidate ng-submit="addModel('Team', newTeam); newTeam = undefined;">
+        <table class="table table-striped">
+          <tbody>
+            <tr ng-show="newTeam">
+              <td><i class="fa fa-fw fa-plus"></i></td>
+              <td>
+                <div style="width: 100%;" ng-class="{'has-success': teamForm.name.$valid, 'has-error': teamForm.name.$dirty &amp;&amp; teamForm.name.$invalid}" class="input-group">
+                  <input type="text" name="name" ng-model="newTeam.name" ng-required="true" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div style="width: 100%;" class="input-group">
+                  <select ng-options="user._id as user.name for user in users" ng-model="newTeam.productOwner" name="productOwner" style="width: 100%;" class="form-control input-sm"></select>
+                </div>
+              </td>
+              <td>
+                <div style="width: 100%;" class="input-group">
+                  <select ng-options="user._id as user.name for user in users" ng-model="newTeam.scrumMaster" name="scrumMaster" style="width: 100%;" class="form-control input-sm"></select>
+                </div>
+              </td>
+              <td>
+                <div style="width: 100%;" ng-class="{'has-success': teamForm.backlog.$valid, 'has-error': teamForm.backlog.$dirty &amp;&amp; teamForm.backlog.$invalid}" class="input-group">
+                  <input type="text" name="backlog" ng-model="newTeam.backlog" ng-required="true" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <div style="width: 100%;" ng-class="{'has-success': teamForm.backlogUrl.$valid, 'has-error': teamForm.backlogUrl.$dirty &amp;&amp; teamForm.backlogUrl.$invalid}" class="input-group">
+                  <input type="text" name="backlogUrl" ng-model="newTeam.backlogUrl" ng-required="true" class="form-control input-sm">
+                </div>
+              </td>
+              <td>
+                <select ng-options="user._id as user.name for user in users" ng-model="newTeam.members" name="members" multiple style="width: 100%;" class="form-control input-sm"></select>
+              </td>
+              <td>
+                <select ng-options="sprint._id as sprint.name for sprint in sprints" ng-model="newTeam.sprints" name="sprints" multiple style="width: 100%;" class="form-control input-sm"></select>
+              </td>
+              <td>
+                <div class="input-group">
+                  <input type="text" name="imageURl" ng-model="newTeam.imageUrl" class="form-control input-sm">
+                </div>
+              </td>
+              <td><i class="fa fa-fw fa-asterisk"></i></td>
+            </tr>
+            <tr>
+              <td colspan="7"><a ng-click="newTeam={}" ng-class="{disabled: newTeam}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-plus"></i>New team</a>
+                <div ng-show="newTeam" class="pull-right">
+                  <button type="submit" ng-disabled="teamForm.$invalid" ng-class="{'btn-success': teamForm.$valid, 'btn-danger': teamForm.$invalid &amp;&amp; teamForm.$dirty}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-send-o"></i> Submit</button> <a ng-click="newTeam=undefined" class="btn btn-sm btn-warning"><i class="fa fa-fw fa-undo"></i> Cancel</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </tab>
+  <tab select="loadModels('Sprint')">
+    <tab-heading><i class="fa fa-fw fa-road"></i> Sprints</tab-heading>
+    <div class="table-responsive"></div>
+    <table class="table table-striped no-margin">
+      <thead>
+        <tr>
+          <th style="width: 5%">#</th>
+          <th style="width: 10%"><i class="fa fa-fw fa-tag"></i> Name</th>
+          <th style="width: 10%"><i class="fa fa-fw fa-trophy"></i> Goal</th>
+          <th style="width: 10%"><i class="fa fa-fw fa-code"></i> MQL</th>
+          <th style="width: 10%"><i class="fa fa-fw fa-bar-chart-o"></i> Wall</th>
+          <th style="width: 15%"><i class="fa fa-fw fa-flag-o"></i> Start</th>
+          <th style="width: 15%"><i class="fa fa-fw fa-flag-checkered"></i> End</th>
+          <th style="width: 10%"><i class="fa fa-fw fa-asterisk"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="sprint in sprints">
+          <td class="vert-align">{{ $index + 1 }}</td>
+          <td class="vert-align"><span editable-text="sprint.name" buttons="no" onaftersave="sprint.$save()">{{ sprint.name || "none" }}</span></td>
+          <td class="vert-align"><span editable-text="sprint.goal" buttons="no" onaftersave="sprint.$save()">{{ sprint.goal || "none" }}</span></td>
+          <td class="vert-align"><span editable-text="sprint.mql" buttons="no" onaftersave="sprint.$save()">{{ sprint.mql || "none" }}</span></td>
+          <td class="vert-align"><span editable-text="sprint.wallUrl" buttons="no" onaftersave="sprint.$save()">{{ sprint.wallUrl || "none" }}</span></td>
+          <td class="vert-align"><span editable-text="sprint.startDate" buttons="no" onaftersave="sprint.$save()">{{ sprint.startDate | date : 'd MMM yyyy' || "none" }}</span></td>
+          <td class="vert-align"><span editable-text="sprint.endDate" buttons="no" onaftersave="sprint.$save()">{{ sprint.endDate | date : 'd MMM yyyy' || "none" }}</span></td>
+          <td class="vert-align"><a href="#" ng-click="sprint.$wait=true" ng-hide="sprint.$wait"><i class="fa fa-trash-o"> Delete</i></a><a href="#" ng-click="sprint.$wait=undefined" ng-show="sprint.$wait"><i class="fa fa-undo"></i> Cancel</a> <a href="#" ng-click="sprint.$confirm=true; removeModel('Sprint', sprint)" ng-show="sprint.$wait"><i class="fa fa-question"></i> Confirm</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <form role="form" name="localForm" novalidate ng-submit="addModel('Sprint', newSprint); newSprint = undefined;">
+      <table class="table">
+        <tbody>
+          <tr ng-show="newSprint">
+            <td style="width: 5%;"><i class="fa fa-fw fa-plus"></i></td>
+            <td style="width: 10%">
+              <div ng-class="{'has-success': localForm.name.$valid, 'has-error': localForm.name.$dirty &amp;&amp; localForm.name.$invalid}" class="input-group">
+                <input type="text" name="name" ng-required="true" ng-model="newSprint.name" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-tag"></i></span>
+              </div>
+            </td>
+            <td style="width: 10%">
+              <div ng-class="{'has-success': localForm.goal.$valid, 'has-error': localForm.goal.$dirty &amp;&amp; localForm.goal.$invalid}" class="input-group">
+                <input type="text" name="goal" ng-required="true" ng-model="newSprint.goal" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-trophy"></i></span>
+              </div>
+            </td>
+            <td style="width: 10%">
+              <div ng-class="{'has-success': localForm.mql.$valid, 'has-error': localForm.mql.$dirty &amp;&amp; localForm.mql.$invalid}" class="input-group">
+                <input type="text" name="mql" ng-required="true" ng-model="newSprint.mql" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-code"></i></span>
+              </div>
+            </td>
+            <td style="width: 10%">
+              <div ng-class="{'has-success': localForm.wallUrl.$valid, 'has-error': localForm.wallUrl.$dirty &amp;&amp; localForm.wallUrl.$invalid}" class="input-group">
+                <input type="text" name="wallUrl" ng-required="true" ng-model="newSprint.wallUrl" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-code"></i></span>
+              </div>
+            </td>
+            <td style="width: 15%">
+              <div ng-class="{'has-success': localForm.startDate.$valid, 'has-error': localForm.startDate.$dirty &amp;&amp; localForm.startDate.$invalid}" class="input-group">
+                <input type="text" name="startDate" ng-required="true" ng-model="newSprint.startDate" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-flag-o"></i></span>
+              </div>
+            </td>
+            <td style="width: 15%">
+              <div ng-class="{'has-success': localForm.endDate.$valid, 'has-error': localForm.endDate.$dirty &amp;&amp; localForm.endDate.$invalid}" class="input-group">
+                <input type="text" name="endDate" ng-required="true" ng-model="newSprint.endDate" class="form-control input-sm"><span class="input-group-addon"><i class="fa fa-fw fa-flag-checkered"></i></span>
+              </div>
+            </td>
+            <td style="width: 10%">hi</td>
+          </tr>
+          <tr>
+            <td colspan="9"><a ng-click="newSprint={}" ng-class="{disabled: newSprint}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-plus"></i>New Sprint</a>
+              <div ng-show="newSprint" class="pull-right">
+                <button type="submit" ng-disabled="localForm.$invalid" ng-class="{'btn-success': localForm.$valid, 'btn-danger': localForm.$invalid &amp;&amp; localForm.$dirty}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-send-o"></i> Submit</button> <a ng-click="newSprint=undefined" class="btn btn-sm btn-warning"><i class="fa fa-fw fa-undo"></i> Cancel</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </tab>
+</tabset>

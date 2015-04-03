@@ -1,0 +1,169 @@
+<div class='row'>
+	<div id="top" class='col-md-8'>
+	<alert ng-repeat="alert in alerts" class="alert alert-{{alert.type}}" close="closeAlert($index)">{{gv.alert.msg}}</alert>
+	</div>
+	<div class='col-md-8 grapevine'>
+		<div class='panel panel-default'>
+			<accordion>
+				<accordion-group is-open="true">
+					<accordion-heading>Make a Feature Branch</accordion-heading> 
+					<form role='form' name='grapes' ng-init='setFormScope(this)'>
+						<div class='form-group'>
+							<label for='branchName'>Branch Name</label>
+							<input class='form-control' placeholder="BR_FEATURE" ng-valid="gv.grapes.branchName.$valid" name='branchName' type='text' ng-model='newBranch.branchName' ng-pattern='/^(BR_+[\w\W]*)+$/'/>
+							<tt class='error' ng-show="gv.grapes.branchName.$invalid">Must prepend Feature branch name with a BR_</tt>
+						</div>
+						<div class='form-group'>
+							<label for='featureWiki'>Feature Wiki</label>
+							<input class='form-control' placeholder="http://" type='text' ng-model='newBranch.featureWiki'/>
+						</div>
+						<div class='form-group'>
+							<label for='mingleCard'>Mingle Card / Rally story</label>
+							<input class='form-control' placeholder="http://" type='text' ng-model='newBranch.mingleCard'/>
+						</div>
+						<div class='form-group'>
+							<label for='featureDevLeads'>Feature Dev Lead Email Addresses - comma delim</label>
+							<input class='form-control' placeholder="test@cisco.com,test@cisco.com"  ng-valid="grapes.featureDevLeads.$valid" name='featureDevLeads' type='text' ng-model='newBranch.featureDevLeads' ng-pattern='/^((([\w]|-|_)+@cisco.com)(,|,\s+|\s+,|\s+,\s+)?)+$/'/>
+							<tt class='error' ng-show="gv.grapes.featureDevLeads.$invalid">Enter a comma delimited list of email addresses - must be @cisco.com domain</tt>
+						</div>
+						<div class='form-group'>
+							<label for='featurePM'>Feature PM Email Addresses - comma delim</label>
+							<input class='form-control' placeholder="test@cisco.com,test@cisco.com" ng-valid="grapes.featurePM.$valid" name='featurePM' type='text' ng-model='newBranch.featurePM' ng-pattern='/^((([\w]|-|_)+@cisco.com)(,|,\s+|\s+,|\s+,\s+)?)+$/'/>
+							<tt class='error' ng-show="gv.grapes.featurePM.$invalid">Enter a comma delimited list of email addresses - must be @cisco.com domain</tt>
+						</div>
+						<div class='form-group'>
+							<label for='notificationEmail'>Notification Email Addresses (mailer) - comma delim</label>
+							<input class='form-control' placeholder="cdc-dev-ops@cisco.com" ng-valid="grapes.notifEmail.$valid" name='notifEmail' type='text' ng-model='newBranch.notificationEmail' ng-pattern='/^((([\w]|-|_)+@cisco.com)(,|,\s+|\s+,|\s+,\s+)?)+$/'/>
+							<tt class='error' ng-show="gv.grapes.notifEmail.$invalid">Enter a comma delimited list of email addresses - must be @cisco.com domain</tt>
+						</div>
+						<!--
+						<div class='form-group'>
+							<label for='targetRelease'>Target Release</label>
+							<input class='form-control' ng-valid="grapes.targetRelease.$valid" name='targetRelease' type='text' ng-model='newBranch.targetRelease' ng-pattern='/^([\w]+RELEASE)+$/'/>
+							<tt ng-show="grapes.targetRelease.$invalid">Must be a valid Release branch, with _RELEASE appended to the branch name - ex. BR_AQUA_RELEASE</tt>
+						</div>
+						-->
+						<div class='form-group'>
+							<label for='codeAffected'>Code Affected</label>
+							<ul>
+								<li ng-repeat='type in codeTypes'>
+									<input type="checkbox" ng-model='type.selected'/>
+									<span class='done'>{{type.name}}</span>
+								</li>
+							</ul>
+						</div>
+						<!--
+						<div class='form-group'>
+							<label for='artifactsNeeded'>Artifacts Needed</label>
+							<ul>
+								<li ng-repeat='type in artifactTypes'>
+									<input type="checkbox" ng-model='type.selected'/>
+									<span class='done'>{{type.name}}</span>
+								</li>
+							</ul>
+						</div>
+						-->
+						<div class='form-group'>
+							<label for='osgiBundle'>New OSGI bundles? (please document in wiki)</label>
+							<ul class='radio-list'>
+								<li>
+									<label class='checkbox'>
+										<input type='radio' name='osgi' value='no' ng-model='newBranch.osgiBundle'/>
+										<span class='done'>No</span>
+									</label>
+								</li>
+								<li>
+									<label class='checkbox'>
+										<input type='radio' name='osgi' value='yes' ng-model='newBranch.osgiBundle'/>
+										<span class='done'>Yes</span>
+									</label>
+								</li>
+							</ul>
+						</div>
+					</form>
+
+					<div class='btn-group'>
+						<button class='btn' ng-disabled="gv.grapes.$invalid" ng-click='createBranch()'>Create Branch</button>
+					</div>
+
+				</accordion-group>
+				<accordion-group is-open="true">
+					<accordion-heading>Make a Hotfix Branch</accordion-heading> 
+				</accordion-group>
+				<accordion-group is-open="true">
+					<accordion-heading>Make a Release Branch</accordion-heading> 
+				</accordion-group>
+			</accordion>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+    	<div class="panel panel-default">
+      		<div class="panel-heading">
+        		<h3 class="panel-title">
+        		Jenkins Job
+        		<!--<i class='pull-right glyphicon' ng-class="{'glyphicon-cog': isopen, 'glyphicon-cog': !isopen}"></i>-->
+        		</h3>
+      		</div>
+      		<div class="panel-body">
+      			<div>
+      				<label>Name</label>
+      				<span><a ng-href="{{jobStatus.url}}">{{jobStatus.name}}</a></span>
+      			</div>
+      			<div>
+      				<label>Status</label>
+      				<span>{{(jobStatus.lastBuild.number===jobStatus.lastSuccessfulBuild.number ? 'stable' : 'unstable')}}</span>
+      			</div>
+      			<div>
+      				<label>Health</label>
+      				<span>{{jobStatus.healthReport[0].description}}</span>
+      			</div>
+           	</div>
+
+        </div>
+    	<div class="panel panel-default">
+      		<div class="panel-heading">
+        		<h3 class="panel-title">Grapevine History</h3>
+      		</div>
+      		<div class="panel-body">
+      			<accordion>
+      				<div ng-repeat='build in jobStatus.builds'>
+						<accordion-group ng-click='grapevineBuildDetails(build)' is-open="isopen">
+							<accordion-heading>Build {{build.number}}
+								<i class='pull-right glyphicon' ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+							</accordion-heading> 
+							<div>
+								<div>
+      								<label>Time</label>
+      								<span>{{build.details.timestamp | date:'mm-dd-yyyy (h:m a)' }}</span>
+      							</div>
+      							<div>
+      								<label>Name</label>
+      								<span>{{build.details.actions[0].parameters[1].value}}</span>
+      							</div>
+      							<div>
+      								<label>Type</label>
+      								<span>{{build.details.actions[0].parameters[0].value}}</span>
+      							</div>
+      							<div>
+      								<label>Upstream</label>
+      								<span>{{build.details.actions[0].parameters[2].value}}</span>
+      							</div>
+      							<div>
+      								<label>Build duration</label>
+      								<span>{{build.details.duration}}</span>
+      							</div>
+      							<div>
+      								<label>Result</label>
+      								<span>{{build.details.result}}</span>
+      							</div>
+      						</div>
+      					</accordion-group>
+					</div>
+				</accordion>
+
+           	</div>
+        </div>
+    </div>
+
+</div>
